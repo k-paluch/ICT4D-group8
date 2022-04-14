@@ -1,44 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <vxml version = "2.1" >
-<form>
-<block>
-<prompt>
-Hello World!
-</prompt>
-</block>
-</form>
-</vxml>
-<?xml version="1.0" encoding="UTF-8"?>
-<vxml version = "2.1" >
-<form>
-<block>
-<prompt>
-Here's a real audio sample in French:<break/>
-<audio src="http://www.few.vu.nl/~vbr240/voices/LTE/communique.wav"/> 
-Mafounay
-</prompt>
-</block>
-</form>
-</vxml>
-<?xml version="1.0" encoding="UTF-8"?>
-<vxml version = "2.1" >
 <menu id="menu1" dtmf="true">
-<prompt>select 1 for ICT4D or 2 for some other, less interesting 
-course</prompt>
+<prompt>Option 1 or 2, press 1 for option 1 and press 2 for option 2</prompt>
 <choice next="#form1"/>
 <choice next="#form2"/>
 </menu>
 <form id="form1">
 <block>
 <prompt>
-You chose the ICT4D course
+You chose option 1
 </prompt>
 </block>
 </form>
 <form id="form2">
 <block>
 <prompt>
-You chose some other less interesting course
+You chose option 2
 </prompt>
 </block>
 </form>
