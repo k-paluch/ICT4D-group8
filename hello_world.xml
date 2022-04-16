@@ -8,15 +8,16 @@
 <form id="form1">
 <block>
 <prompt>
-You chose option 1
+You chose option 1. Thank you for your vote.
 </prompt>
 </block>
 </form>
 <form id="form2">
 <block>
 <prompt>
-You chose option 2
+You chose option 2. Thank you for your vote.
 </prompt>
 </block>
+
 </form>
 </vxml>
