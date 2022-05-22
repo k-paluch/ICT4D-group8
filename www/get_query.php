@@ -1,5 +1,18 @@
 <?php
 
+$username = $_GET['username'];
+$password = $_GET['password'];
+
+function make_links_clickable($text){
+    return preg_replace('!(((f|ht)tp(s)?://)[-a-zA-Zа-яА-Я()0-9@:%_+.~#?&;//=]+)!i', '<a href="$1">$1</a>', $text);
+}
+
+if($username!='admin' or $password!='admin'){
+    echo 'wrong login credentials, please log in again on ';
+    echo make_links_clickable('https://ict4d2022.000webhostapp.com/index.php');
+    exit();
+}
+
 $servername = "localhost";
 $username = "id18839033_ict4d_user";
 $password = "sT[d+6qEhs!A5Rh}";
@@ -8,22 +21,52 @@ $database = "id18839033_ict4d";
 $link = new mysqli($servername, $username, $password, $database);
     
 
-$query ="SELECT COUNT(vote) from ICT4D where vote=1";
+$query ="SELECT Question from current_question";
+
+$result = mysqli_query($link, $query); 
+while($selectQueryRow = $result->fetch_array()) {
+  $question=$selectQueryRow['Question'];
+}
+
+
+$query ="SELECT COUNT(vote) from ICT4D where vote=1 AND Question= '$question'";
 $result = mysqli_query($link, $query); 
 while($selectQueryRow = $result->fetch_array()) {
   $vote_y=$selectQueryRow['COUNT(vote)'];
 }
 
-$query ="SELECT COUNT(vote) from ICT4D where vote=0";
+$query ="SELECT COUNT(vote) from ICT4D where vote=0 AND Question= '$question'";
 $result = mysqli_query($link, $query); 
 while($selectQueryRow = $result->fetch_array()) {
     $vote_n=$selectQueryRow['COUNT(vote)'];
 }
 
+
+
+
+   
+function getoptions($link, $query) {
+    $query ="SELECT Question from questions";
+
+$result = mysqli_query($link, $query); 
+    $opt ="<select name='question_change'>";
+    foreach( $result as $row ){
+    $opt .= "<option>" . $row['Question'] . "</option>";
+   };
+    $opt .="</select>";
+  return $opt;
+}
+
+$opt = getoptions($link, $query);
+
+
 mysqli_close($link);
 
 
 function cal_percentage($num_amount, $num_total) {
+    if ($num_total == 0) {
+  return 0;
+}
   $count1 = $num_amount / $num_total;
   $count2 = $count1 * 100;
   $count = number_format($count2, 0);
@@ -36,8 +79,19 @@ $w_n = cal_percentage($vote_n,$vote_y+$vote_n);
 
 echo '<html>
 <link rel="stylesheet" href="main.css">
+<h1>Add new question into the database:</h1>
+<form action ="add_question.php">
+    <input name="add_question" type="text"/>
+    <input type="submit" name ="submit" value="submit"/>
+</form>
+<h1>Change question to vote on (the results for the chosen question will then be shown):</h1>
+<form action ="change_question.php">
+
+    '.$opt.'
+    <input type="submit" name ="submit" value="submit"/>
+</form>
 <section>
-  <h1>Voting results: </h1>
+  <h1>'.$question.' </h1>
   <div class="poll-option">
     <span class="poll-option__label">Yes</span>
     <table class="poll-option__result">

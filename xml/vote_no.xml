@@ -7,10 +7,14 @@
 <block>
 </block>
 <block>
+<prompt>
+    Thank you for voting!
+  </prompt>
 
 <data src="https://ict4d2022.000webhostapp.com/to_sql.php" namelist="ChargeCallToNum vote" method="get"/> 
 </block>
 </form>
+
 
 
 </vxml>
